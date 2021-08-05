@@ -1,0 +1,114 @@
+1
+system-view
+int g0/0/0
+ip address 192.168.1.2 255.255.255.0
+int g0/0/1
+ip address 192.168.5.1 255.255.255.0
+int g0/0/2
+ip address 192.168.6.1 255.255.255.0
+quit
+rip
+network 192.168.1.0
+network 192.168.5.0
+network 192.168.6.0
+quit
+display rip
+display ip routing-table
+ospf 1 router-id 192.168.1.2
+area 0
+network 192.168.1.0 0.0.0.255
+network 192.168.5.0 0.0.0.255
+network 192.168.6.0 0.0.0.255
+quit
+quit
+
+acl 3001
+rule deny ip source 192.168.1.0 0.0.0.255 destination 192.168.2.0 0.0.0.255
+int g0/0/0
+traffic-filter inbound acl 3001
+quit
+quit
+save
+
+acl 3001
+rule deny ip source 192.168.1.0 0.0.0.255
+acl 3002
+rule deny ip destination 192.168.1.0 0.0.0.255
+int g0/0/0
+taffic-filter inbound acl 3001
+taffic-filter outbound acl 3002
+
+
+2
+system-view
+int g0/0/0
+ip address 192.168.2.2 255.255.255.0
+int g0/0/1
+ip address 192.168.5.2 255.255.255.0
+int g0/0/2
+ip address 192.168.7.1 255.255.255.0
+quit
+rip
+network 192.168.2.0
+network 192.168.5.0
+network 192.168.7.0
+quit
+
+ospf 1 router-id 192.168.2.2
+area 0
+network 192.168.2.0 0.0.0.255
+network 192.168.5.0 0.0.0.255
+network 192.168.7.0 0.0.0.255
+quit
+quit
+
+save
+
+3
+system-view
+int g0/0/2
+ip address 192.168.3.2 255.255.255.0
+int g0/0/1
+ip address 192.168.7.2 255.255.255.0
+int g0/0/0
+ip address 192.168.6.2 255.255.255.0
+int g0/0/3
+ip address 192.168.8.1 255.255.255.0
+quit
+rip
+network 192.168.3.0
+network 192.168.6.0
+network 192.168.7.0
+network 192.168.8.0
+quit
+
+ospf 1 router-id 192.168.3.2
+area 0
+network 192.168.3.0 0.0.0.255
+network 192.168.7.0 0.0.0.255
+network 192.168.6.0 0.0.0.255
+network 192.168.8.0 0.0.0.255
+quit
+quit
+save
+
+4
+system-view
+int g0/0/0
+ip address 192.168.4.1 255.255.255.0
+int g0/0/1
+ip address 192.168.8.2 255.255.255.0
+quit
+rip
+network 192.168.4.0
+network 192.168.8.0
+quit
+
+ospf 1 router-id 192.168.4.2
+area 0
+network 192.168.4.0 0.0.0.255
+network 192.168.8.0 0.0.0.255
+quit
+quit
+
+save
